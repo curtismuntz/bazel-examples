@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
-import { ObservableClient, ElizaService } from '@ngc-example/connect';
-
+import { ObservableClient, ElizaService, SayRequest } from '@ngc-example/connect';
+import { HelloRequest } from 'proto/example_pb';
 interface Response {
   text: string;
   sender: 'eliza' | 'user';
@@ -37,6 +37,7 @@ export class AppComponent {
       { text: this.statement, sender: 'user' },
     ];
     if (this.introFinished) {
+      const woo = new SayRequest();
       this.client.say({ sentence: this.statement }).subscribe((next) => {
         this.responses = [
           ...this.responses,

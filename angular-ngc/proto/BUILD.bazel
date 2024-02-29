@@ -1,0 +1,17 @@
+load("@aspect_rules_ts//ts:proto.bzl", "ts_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+
+package(default_visibility = ["//visibility:public"])
+
+proto_library(
+    name = "example_proto",
+    srcs = ["example.proto"],
+    deps = ["@protobuf//:timestamp_proto"],
+)
+
+ts_proto_library(
+    name = "example_ts_proto",
+    copy_files = False,
+    node_modules = "//packages/connect:node_modules",
+    proto = ":example_proto",
+)
