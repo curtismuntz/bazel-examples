@@ -37,7 +37,8 @@ export class AppComponent {
       { text: this.statement, sender: 'user' },
     ];
     if (this.introFinished) {
-      const woo = new SayRequest();
+      const bar = new SayRequest();
+      const foo = new HelloRequest();
       this.client.say({ sentence: this.statement }).subscribe((next) => {
         this.responses = [
           ...this.responses,
