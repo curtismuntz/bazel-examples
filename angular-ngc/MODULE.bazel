@@ -1,122 +1,122 @@
-###############################################################################
-# Bazel now uses Bzlmod by default to manage external dependencies.
-# Please consider migrating your external dependencies from WORKSPACE to MODULE.bazel.
+################################################################################
+## Bazel now uses Bzlmod by default to manage external dependencies.
+## Please consider migrating your external dependencies from WORKSPACE to MODULE.bazel.
+##
+## For more details, please check https://github.com/bazelbuild/bazel/issues/18958
+################################################################################
+#module(name = "gm")
 #
-# For more details, please check https://github.com/bazelbuild/bazel/issues/18958
-###############################################################################
-module(name = "gm")
-
-# From https://registry.bazel.build/
-bazel_dep(name = "aspect_bazel_lib", version = "2.4.1")
-bazel_dep(name = "bazel_skylib", version = "1.5.0")
-bazel_dep(name = "protobuf", version = "23.1")
-bazel_dep(name = "aspect_rules_js", version = "1.38.0")
-bazel_dep(name = "aspect_rules_swc", version = "1.1.0")
-bazel_dep(name = "aspect_rules_esbuild", version = "0.18.0")
-bazel_dep(name = "aspect_rules_ts", version = "2.1.1")
-bazel_dep(name = "rules_nodejs", version = "5.8.3")
-
+## From https://registry.bazel.build/
+#bazel_dep(name = "aspect_bazel_lib", version = "2.4.1")
+#bazel_dep(name = "bazel_skylib", version = "1.5.0")
+#bazel_dep(name = "protobuf", version = "23.1")
+#bazel_dep(name = "aspect_rules_js", version = "1.38.0")
+#bazel_dep(name = "aspect_rules_swc", version = "1.1.0")
+#bazel_dep(name = "aspect_rules_esbuild", version = "0.18.0")
+#bazel_dep(name = "aspect_rules_ts", version = "2.1.1")
+#bazel_dep(name = "rules_nodejs", version = "5.8.3")
+#
+##################################################################################
+### rules_js
+##################################################################################
+#SASS_DEPS = ["@angular/cdk"] + [
+#    "@material/" + p
+#    for p in [
+#        "animation",
+#        "base",
+#        "button",
+#        "card",
+#        "checkbox",
+#        "chips",
+#        "circular-progress",
+#        "data-table",
+#        "density",
+#        "dialog",
+#        "dom",
+#        "elevation",
+#        "fab",
+#        "feature-targeting",
+#        "floating-label",
+#        "focus-ring",
+#        "form-field",
+#        "line-ripple",
+#        "linear-progress",
+#        "list",
+#        "menu",
+#        "menu-surface",
+#        "notched-outline",
+#        "icon-button",
+#        "radio",
+#        "ripple",
+#        "rtl",
+#        "select",
+#        "shape",
+#        "slider",
+#        "snackbar",
+#        "switch",
+#        "tab",
+#        "tab-bar",
+#        "tab-indicator",
+#        "tab-scroller",
+#        "textfield",
+#        "theme",
+#        "tooltip",
+#        "touch-target",
+#        "tokens",
+#        "typography",
+#    ]
+#]
+#
+#node = use_extension("@rules_nodejs//nodejs:extensions.bzl", "node")
+#node.toolchain(node_version = "16.14.2")
+#
+#npm = use_extension(
+#    "@aspect_rules_js//npm:extensions.bzl",
+#    "npm",
+#    dev_dependency = True,
+#)
+#npm.npm_translate_lock(
+#    name = "npm",
+#    data = [
+#        "@@//:package.json",
+#        "@@//:pnpm-workspace.yaml",
+#    ],
+#    npmrc = "//:.npmrc",
+#    pnpm_lock = "//:pnpm-lock.yaml",
+#    # Workaround https://github.com/sass/dart-sass/issues/1765
+#    # See comments in sass_workaround.bzl
+#    public_hoist_packages = {p: [
+#        "packages/lib-a",
+#    ] for p in SASS_DEPS},
+#    update_pnpm_lock = True,
+#    verify_node_modules_ignored = "//:.bazelignore",
+#)
+#use_repo(npm, "npm")
+#
+#pnpm = use_extension(
+#    "@aspect_rules_js//npm:extensions.bzl",
+#    "pnpm",
+#    dev_dependency = True,
+#)
+#use_repo(pnpm, "pnpm")
+#
 #################################################################################
-## rules_js
+## rules_ts
 #################################################################################
-SASS_DEPS = ["@angular/cdk"] + [
-    "@material/" + p
-    for p in [
-        "animation",
-        "base",
-        "button",
-        "card",
-        "checkbox",
-        "chips",
-        "circular-progress",
-        "data-table",
-        "density",
-        "dialog",
-        "dom",
-        "elevation",
-        "fab",
-        "feature-targeting",
-        "floating-label",
-        "focus-ring",
-        "form-field",
-        "line-ripple",
-        "linear-progress",
-        "list",
-        "menu",
-        "menu-surface",
-        "notched-outline",
-        "icon-button",
-        "radio",
-        "ripple",
-        "rtl",
-        "select",
-        "shape",
-        "slider",
-        "snackbar",
-        "switch",
-        "tab",
-        "tab-bar",
-        "tab-indicator",
-        "tab-scroller",
-        "textfield",
-        "theme",
-        "tooltip",
-        "touch-target",
-        "tokens",
-        "typography",
-    ]
-]
-
-node = use_extension("@rules_nodejs//nodejs:extensions.bzl", "node")
-node.toolchain(node_version = "16.14.2")
-
-npm = use_extension(
-    "@aspect_rules_js//npm:extensions.bzl",
-    "npm",
-    dev_dependency = True,
-)
-npm.npm_translate_lock(
-    name = "npm",
-    data = [
-        "@@//:package.json",
-        "@@//:pnpm-workspace.yaml",
-    ],
-    npmrc = "//:.npmrc",
-    pnpm_lock = "//:pnpm-lock.yaml",
-    # Workaround https://github.com/sass/dart-sass/issues/1765
-    # See comments in sass_workaround.bzl
-    public_hoist_packages = {p: [
-        "packages/lib-a",
-    ] for p in SASS_DEPS},
-    update_pnpm_lock = True,
-    verify_node_modules_ignored = "//:.bazelignore",
-)
-use_repo(npm, "npm")
-
-pnpm = use_extension(
-    "@aspect_rules_js//npm:extensions.bzl",
-    "pnpm",
-    dev_dependency = True,
-)
-use_repo(pnpm, "pnpm")
-
-################################################################################
-# rules_ts
-################################################################################
-rules_ts_ext = use_extension(
-    "@aspect_rules_ts//ts:extensions.bzl",
-    "ext",
-    dev_dependency = True,
-)
-rules_ts_ext.deps(ts_version_from = "//:package.json")
-use_repo(rules_ts_ext, "npm_typescript")
-
-################################################################################
-# rules_esbuild
-################################################################################
-esbuild = use_extension("@aspect_rules_esbuild//esbuild:extensions.bzl", "esbuild")
-esbuild.toolchain(
-    name = "esbuild",
-    esbuild_version = "0.19.9",
-)
-use_repo(esbuild, "esbuild_toolchains")
+#rules_ts_ext = use_extension(
+#    "@aspect_rules_ts//ts:extensions.bzl",
+#    "ext",
+#    dev_dependency = True,
+#)
+#rules_ts_ext.deps(ts_version_from = "//:package.json")
+#use_repo(rules_ts_ext, "npm_typescript")
+#
+#################################################################################
+## rules_esbuild
+#################################################################################
+#esbuild = use_extension("@aspect_rules_esbuild//esbuild:extensions.bzl", "esbuild")
+#esbuild.toolchain(
+#    name = "esbuild",
+#    esbuild_version = "0.19.9",
+#)
+#use_repo(esbuild, "esbuild_toolchains")

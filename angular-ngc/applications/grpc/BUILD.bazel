@@ -17,8 +17,10 @@ ng_application(
         ":node_modules/@ngc-example/common",
     ],
     deps = [
+        ":node_modules/@ngc-example/common",
         ":node_modules/@ngc-example/connect",
         ":node_modules/@ngc-example/lib-a",
+        "//:node_modules/@bufbuild/protobuf",
         "//proto:example_ts_proto",
     ],
 )
